@@ -1,0 +1,11 @@
+# Private Python environment (Setup.bat recreates it)
+.venv/
+
+# Python caches
+__pycache__/
+*.pyc
+
+# Never commit playlists or exported settings that may contain logins
+*.m3u
+*.m3u8
+settings.json

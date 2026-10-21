@@ -1,0 +1,3 @@
+# The only third-party Python package: VideoLAN's official Python bindings for VLC, from PyPI.
+# The hash pins the exact file, so pip refuses anything that has been tampered with.
+python-vlc==3.0.21203 --hash=sha256:1613451a31b692ec276296ceeae0c0ba82bfc2d094dabf9aceb70f58944a6320
