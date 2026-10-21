@@ -1,4 +1,4 @@
-# Waz TV
+# Clearstream
 
 A small TV player for Windows 11. It shows legitimate free channels, grouped into **Football, Tennis,
 Cricket and News**, plus any paid IPTV service you add later. Video plays through **VLC's playback
@@ -30,10 +30,10 @@ below; ignore "download" buttons on any other site.
 
 *(Already installed on this PC: VLC 3.0.24, 64-bit.)*
 
-### Step 3: Set up Waz TV
-1. Put the **Waz TV** folder wherever you like, for example `Documents\Waz TV`.
+### Step 3: Set up Clearstream
+1. Put the **Clearstream** folder wherever you like, for example `Documents\Clearstream`.
 2. Open it and **double-click `Setup.bat`**.
-3. A black window checks Python and VLC, installs the one add-on, and puts a **Waz TV** icon on your
+3. A black window checks Python and VLC, installs the one add-on, and puts a **Clearstream** icon on your
    desktop. When it says **All done**, press any key.
 
 If Windows shows "Windows protected your PC", click **More info → Run anyway**. Windows shows this
@@ -41,7 +41,7 @@ for any script it hasn't seen before. `Setup.bat` is a plain text file; you can 
 read every line.
 
 ### Step 4: Start it
-Double-click the **Waz TV** icon on your desktop (or `Start Waz TV.bat` in the folder).
+Double-click the **Clearstream** icon on your desktop (or `Start Clearstream.bat` in the folder).
 
 ---
 
@@ -54,8 +54,8 @@ Double-click the **Waz TV** icon on your desktop (or `Start Waz TV.bat` in the f
 | Show one country only | Use the **All countries** drop-down |
 | Add / remove a favourite | Click the **☆** next to a channel, or the **Add to favourites** button while watching |
 | Full screen | **F11**, the **Full screen** button, or double-click the video. **Esc** to leave |
-| Dark mode | **View → Dark mode**, or press **Ctrl+D**. Waz TV remembers your choice |
-| Picture looks squashed or has black bars | Use the **Picture** button under the video: Auto, 16:9, 4:3, Fill screen or Original. Waz TV remembers your choice for each channel |
+| Dark mode | **View → Dark mode**, or press **Ctrl+D**. Clearstream remembers your choice |
+| Picture looks squashed or has black bars | Use the **Picture** button under the video: Auto, 16:9, 4:3, Fill screen or Original. Clearstream remembers your choice for each channel |
 | Smoother playback on poor internet | **Playback → Buffer: Long** |
 | Re-check which channels work | **Playback → Check channels in this list now** |
 
@@ -72,7 +72,7 @@ country** also show as Offline.
 
 **What happens when a stream drops:**
 1. VLC keeps about 15 seconds of video in reserve, so short internet hiccups don't interrupt anything.
-2. If the picture stops, Waz TV reconnects by itself (after 2, 5, then 10 seconds).
+2. If the picture stops, Clearstream reconnects by itself (after 2, 5, then 10 seconds).
 3. If the channel has backup streams, it switches to the next one automatically.
 4. Once a channel has been playing, it keeps trying for up to **3 minutes** before giving up. It never
    marks a channel Offline just because *your* internet dropped.
@@ -105,7 +105,7 @@ automatically.
 
 - Your link, username and password are **encrypted with your Windows account** (Windows' built-in DPAPI)
   and are only ever sent to your provider.
-- Waz TV tries an encrypted (**https**) connection first. **Sources → Manage my sources** shows
+- Clearstream tries an encrypted (**https**) connection first. **Sources → Manage my sources** shows
   whether your provider's connection is encrypted. Many IPTV providers only offer plain http; that's on
   their side.
 - Many providers allow only 1–2 connections at once, so paid channels are **not** checked automatically.
@@ -156,7 +156,7 @@ a special player. Those are the pirated feeds full of malware and trackers that 
 
 ---
 
-## 5. How Waz TV keeps you safe
+## 5. How Clearstream keeps you safe
 
 - **No ads, no tracking, no accounts, no telemetry.** It only connects to:
   1. `iptv-org.github.io`, the public channel list (once a day, over https);
@@ -169,7 +169,7 @@ a special player. Those are the pirated feeds full of malware and trackers that 
   anything up online.
 - **The free list is filtered beyond iptv-org's own blocklist.** iptv-org lists any public stream, and on
   inspection its sports section mixes official free channels with pirate copies of beIN, Sky Sports, Star
-  Sports, ESPN and others. Waz TV removes:
+  Sports, ESPN and others. Clearstream removes:
   - pay-TV sports brands entirely (they are never legitimately free);
   - links that use a bare IP address or unencrypted http;
   - hosts known for restreaming or relays.
@@ -181,11 +181,11 @@ a special player. Those are the pirated feeds full of malware and trackers that 
   insecure address, and every download has a size limit.
 - **One add-on package**, `python-vlc` from the official Python Package Index, installed with a
   **pinned file hash** so a tampered copy is refused. No other third-party code. No bundled installers.
-- **Your data stays on your PC:** settings and caches are in `%APPDATA%\Waz TV`. Paid-service details
+- **Your data stays on your PC:** settings and caches are in `%APPDATA%\Clearstream`. Paid-service details
   are encrypted with your Windows account. The cache files use scrambled names, so private links aren't
   written in readable form.
 
-**To uninstall:** delete the Waz TV folder, the desktop icon, and `%APPDATA%\Waz TV` (paste that
+**To uninstall:** delete the Clearstream folder, the desktop icon, and `%APPDATA%\Clearstream` (paste that
 into the File Explorer address bar). Python and VLC can be removed from Windows Settings → Apps.
 
 ---
@@ -201,4 +201,4 @@ into the File Explorer address bar). Python and VLC can be removed from Windows 
 | Video stutters | **Playback → Buffer: Long** |
 | Paid service won't load | Check the server/username/password with your provider; the reason shows in **Sources → Manage my sources** |
 
-Technical log: **Help → Open log folder** (the file `waztv.log`).
+Technical log: **Help → Open log folder** (the file `clearstream.log`).

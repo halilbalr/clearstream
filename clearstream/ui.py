@@ -120,7 +120,7 @@ class App:
 
     def _build(self):
         root = self.root
-        root.title("Waz TV")
+        root.title("Clearstream")
         k = root.winfo_fpixels("1i") / 96          # 1.0 at 100 % Windows scaling, 1.5 at 150 %, ...
         root.geometry(f"{int(1280 * k)}x{int(760 * k)}")
         root.minsize(int(980 * k), int(560 * k))
@@ -300,9 +300,9 @@ class App:
             log.error("VLC unavailable: %s", e)
             messagebox.showerror(
                 "VLC not found",
-                "Waz TV plays video through VLC, but it couldn't find the 64-bit VLC media player.\n\n"
+                "Clearstream plays video through VLC, but it couldn't find the 64-bit VLC media player.\n\n"
                 "Install VLC from https://www.videolan.org (choose the 64-bit Windows version), "
-                "then start Waz TV again.\n\nDetails: " + str(e))
+                "then start Clearstream again.\n\nDetails: " + str(e))
 
     def _player_event(self, kind, message, channel, stream):
         if kind == "stream_dead" and stream is not None:
@@ -704,7 +704,7 @@ class App:
         if paid and not messagebox.askyesno(
                 "Check paid channels?",
                 f"This list has {len(paid)} channels from your paid service. Many services only allow one "
-                "or two connections at a time, so Waz TV will check them slowly, one at a time. "
+                "or two connections at a time, so Clearstream will check them slowly, one at a time. "
                 "Continue?"):
             paid = []
         if free:
@@ -744,7 +744,7 @@ class App:
     def add_xtream(self):
         d = FormDialog(self.root, "Add paid service (Xtream)",
                        "Enter the server address, username and password from your provider. They are "
-                       "stored encrypted with your Windows account. Waz TV tries an encrypted (https) "
+                       "stored encrypted with your Windows account. Clearstream tries an encrypted (https) "
                        "connection first.",
                        [("Name", "name", False, "My TV service"), ("Server address", "server", False, ""),
                         ("Username", "username", False, ""), ("Password", "password", True, "")])
@@ -790,7 +790,7 @@ class App:
             if not sel:
                 return
             kind, item = items[sel[0]]
-            if not messagebox.askyesno("Remove", "Remove this source from Waz TV?", parent=win):
+            if not messagebox.askyesno("Remove", "Remove this source from Clearstream?", parent=win):
                 return
             if kind == "source":
                 self.settings["sources"].remove(item)
@@ -809,8 +809,8 @@ class App:
 
     def show_about(self):
         messagebox.showinfo(
-            "About Waz TV",
-            "Waz TV plays TV streams through VLC's official playback engine.\n\n"
+            "About Clearstream",
+            "Clearstream plays TV streams through VLC's official playback engine.\n\n"
             "• No ads, no tracking, no accounts. It only contacts: the iptv-org channel list "
             "(github.io), the TV streams you play or check, and any paid service or guide you add.\n"
             "• It never downloads or runs programs. Playlists are read as plain text; only channel names "

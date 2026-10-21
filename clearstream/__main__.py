@@ -1,4 +1,4 @@
-"""Start Waz TV:  python -m waztv"""
+"""Start Clearstream:  python -m clearstream"""
 import ctypes
 import logging
 import logging.handlers

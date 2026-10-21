@@ -8,11 +8,11 @@ import os
 import threading
 from ctypes import wintypes
 
-APP_NAME = "Waz TV"
+APP_NAME = "Clearstream"
 DATA_DIR = os.path.join(os.environ.get("APPDATA") or os.path.expanduser("~"), APP_NAME)
 CACHE_DIR = os.path.join(DATA_DIR, "cache")
 SETTINGS_PATH = os.path.join(DATA_DIR, "settings.json")
-LOG_PATH = os.path.join(DATA_DIR, "waztv.log")
+LOG_PATH = os.path.join(DATA_DIR, "clearstream.log")
 
 # iptv-org country codes for the countries chosen at setup.
 COUNTRY_NAMES = {
@@ -37,13 +37,14 @@ log = logging.getLogger(__name__)
 
 
 def ensure_dirs():
-    # The app used to be called SafeIPTV; carry its settings over once.
-    old = os.path.join(os.path.dirname(DATA_DIR), "SafeIPTV")
-    if os.path.isdir(old) and not os.path.exists(DATA_DIR):
-        try:
-            os.replace(old, DATA_DIR)
-        except OSError:
-            pass
+    # The app used to be called Waz TV, and SafeIPTV before that; carry settings over once.
+    for previous in ("Waz TV", "SafeIPTV"):
+        old = os.path.join(os.path.dirname(DATA_DIR), previous)
+        if os.path.isdir(old) and not os.path.exists(DATA_DIR):
+            try:
+                os.replace(old, DATA_DIR)
+            except OSError:
+                pass
     os.makedirs(CACHE_DIR, exist_ok=True)
 
 

@@ -8,7 +8,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 
-APP_UA = "WazTV/1.0"
+APP_UA = "Clearstream/1.0"
 # The health check identifies itself the same way the player does, so servers answer it the same way.
 PLAYER_UA = "VLC/3.0.24 LibVLC/3.0.24"
 
