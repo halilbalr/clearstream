@@ -1,5 +1,7 @@
 # Clearstream
 
+![Clearstream in dark mode: channel groups on the left, the News list in the middle, ABC News (Australia) playing on the right](docs/screenshot.png)
+
 A small TV player for Windows 11. It shows legitimate free channels, grouped into **Football, Tennis,
 Cricket and News**, plus any paid IPTV service you add later. Video plays through **VLC's playback
 engine** (libVLC), the same engine as the VLC media player, so the hard part, smooth playback, is
