@@ -8,7 +8,7 @@ import tkinter as tk
 import uuid
 from tkinter import filedialog, messagebox, ttk
 
-from . import config, epg, health, netutil, sources
+from . import __version__, config, epg, health, netutil, sources
 from .player import ASPECTS, Player, PlayerUnavailable
 
 log = logging.getLogger(__name__)
@@ -106,6 +106,7 @@ class App:
         self.pending_loads = 0
         self.check_cancel = threading.Event()
         self.checking = False
+        self._check_text = ""
         self.current = None
         self.player = None
         self.fullscreen = False
@@ -219,12 +220,16 @@ class App:
         self.right = ttk.Frame(self.paned, padding=(4, 8, 8, 8))
         self.video = tk.Frame(self.right, bg="black", width=640, height=360)
         self.video.pack(fill="both", expand=True)
+        # Message shown in the video area whenever nothing is playing (loading, first check, idle).
+        self.video_msg = tk.Label(self.video, bg="black", fg="#d0d0d0", font=("Segoe UI", 13),
+                                  justify="center", wraplength=int(560 * k))
+        self._video_message("Loading the channel list…")
         self.video.bind("<Double-1>", lambda e: self.toggle_fullscreen())
         self.video.bind("<Configure>", lambda e: self.player and self.player.aspect == "fill"
                         and self.player.apply_aspect())
         self.info = ttk.Frame(self.right)
         self.info.pack(fill="x", pady=(8, 0))
-        self.title_var = tk.StringVar(value="Pick a channel and double-click it to watch.")
+        self.title_var = tk.StringVar(value="Nothing playing yet.")
         ttk.Label(self.info, textvariable=self.title_var, font=("Segoe UI", 13, "bold")).pack(anchor="w")
         self.now_var, self.next_var = tk.StringVar(), tk.StringVar()
         ttk.Label(self.info, textvariable=self.now_var).pack(anchor="w")
@@ -321,6 +326,7 @@ class App:
             self.play_status.set(message)
         if kind in ("failed", "lost"):
             self.current = None
+            self._idle_message()
 
     def _tick(self):
         if self.player:
@@ -338,6 +344,23 @@ class App:
         if sel and sel[0] in self.channels:
             self.play(self.channels[sel[0]])
 
+    def _video_message(self, text):
+        """Show a centred message in the video area, or hide it (text=None) while video plays."""
+        if text is None:
+            self.video_msg.place_forget()
+        else:
+            self.video_msg.config(text=text)
+            self.video_msg.place(relx=0.5, rely=0.5, anchor="center")
+
+    def _idle_message(self):
+        """What the video area says when nothing is playing."""
+        if self.current is not None:
+            return
+        if self.checking:
+            self._video_message(self._check_text)
+        else:
+            self._video_message("Pick a channel and double-click it to watch.")
+
     def play(self, channel):
         if not self.player:
             self._init_player()
@@ -352,6 +375,7 @@ class App:
         self.aspect_var.set(mode)
         self.aspect_btn.config(text=f"▭ Picture: {ASPECTS[mode]}")
         self.player.aspect = mode
+        self._video_message(None)
         self.player.play(channel)
 
     def stop(self):
@@ -359,6 +383,7 @@ class App:
             self.player.stop()
         self.current = None
         self.play_status.set("Stopped.")
+        self._idle_message()
 
     def _volume_changed(self, value):
         self.settings["volume"] = int(float(value))
@@ -481,6 +506,9 @@ class App:
     def _free_failed(self, e):
         self.status_var.set(f"Couldn't load the free channel list ({e}). Check your internet connection, "
                             "then use Sources → Refresh.")
+        if self.current is None:
+            self._video_message("Couldn't load the free channel list.\n\nCheck your internet connection, "
+                                "then choose Sources → Refresh all channel lists.")
         self._load_finished()
 
     def _source_loaded(self, src, result):
@@ -670,6 +698,8 @@ class App:
         self.check_cancel.clear()
         total = len(channels)
         self.status_var.set(f"Checking {total} {label}…")
+        self._set_check_text(0, total)
+        self._idle_message()
 
         def progress(done, total_, ch):
             self.ui_queue.put((self._check_progress, (done, total_, ch)))
@@ -678,11 +708,23 @@ class App:
                                                   self.check_cancel),
                     lambda _r: self._check_done(label), lambda e: self._check_done(label))
 
+    def _set_check_text(self, done, total):
+        left = max(total - done, 0)
+        minutes = "about a minute" if left > 150 else "less than a minute"
+        self._check_text = (f"Checking which channels are working: {done} of {total} done ({minutes} to go).\n\n"
+                            "Working channels move to the top of the list as they pass.\n"
+                            "You can start watching any channel now.")
+
     def _check_progress(self, args):
         done, total, ch = args
         self._update_row(ch)
         if done % 10 == 0 or done == total:
             self.status_var.set(f"Checking channels… {done} of {total}")
+            self._set_check_text(done, total)
+            self._idle_message()
+        # Re-sort now and then so live channels rise to the top, unless you are busy in the list.
+        if done % 60 == 0 and not self.tree.selection() and self.tree.yview()[0] == 0.0:
+            self.refresh_list()
 
     def _check_done(self, label):
         self.checking = False
@@ -691,6 +733,7 @@ class App:
         self.status_var.set(f"Check finished: {live} channels live, {dead} offline (offline ones are greyed "
                             "out at the bottom of each list).")
         self.refresh_list()
+        self._idle_message()
 
     def check_visible(self):
         chans = self.visible_channels()
@@ -810,7 +853,7 @@ class App:
     def show_about(self):
         messagebox.showinfo(
             "About Clearstream",
-            "Clearstream plays TV streams through VLC's official playback engine.\n\n"
+            f"Clearstream {__version__} plays TV streams through VLC's official playback engine.\n\n"
             "• No ads, no tracking, no accounts. It only contacts: the iptv-org channel list "
             "(github.io), the TV streams you play or check, and any paid service or guide you add.\n"
             "• It never downloads or runs programs. Playlists are read as plain text; only channel names "

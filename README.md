@@ -2,7 +2,14 @@
 
 ![Clearstream in dark mode: channel groups on the left, the Tennis list in the middle, a live tennis match playing on the right](docs/screenshots.png)
 
-A small TV player for Windows 11. It shows legitimate free channels, grouped into **Football, Tennis,
+> **Quick start** (Windows 10 or 11, 64-bit only)
+> 1. Download **`Clearstream-1.0.0-windows-x64.zip`** from the
+>    [latest release](https://github.com/killerwaz/clearstream/releases/latest).
+> 2. Right-click the zip, choose **Extract All…**, and open the extracted **Clearstream** folder.
+> 3. Double-click **`Clearstream.exe`**. If Windows says "Windows protected your PC", click
+>    **More info → Run anyway** (the app isn't code-signed). Nothing else to install.
+
+A small TV player for Windows. It shows legitimate free channels, grouped into **Football, Tennis,
 Cricket and News**, plus any paid IPTV service you add later. Video plays through **VLC's playback
 engine** (libVLC), the same engine as the VLC media player, so the hard part, smooth playback, is
 handled by proven software rather than something home-made.
@@ -13,37 +20,45 @@ little that could go wrong or be tampered with.
 
 ---
 
-## 1. Install (about 10 minutes, once)
+## 1. Install
+
+### Option A: download the ready-made app (recommended)
+
+Follow the **Quick start** above. The download includes everything Clearstream needs, including VLC's
+playback engine, so you don't need Python or VLC installed. Keep the extracted folder together:
+`Clearstream.exe` needs the files beside it. You can put the folder anywhere, for example
+`Documents\Clearstream`, and pin `Clearstream.exe` to Start or the taskbar.
+
+Each release lists a **SHA-256** checksum. If you want to confirm your download is the genuine file,
+run this in PowerShell and compare the result:
+
+```powershell
+Get-FileHash .\Clearstream-1.0.0-windows-x64.zip
+```
+
+### Option B: run it from the source code (about 10 minutes)
 
 You need two free programs from their official websites. Download them **only** from the addresses
 below; ignore "download" buttons on any other site.
 
-### Step 1: Install Python
-1. Go to **https://www.python.org/downloads/windows/**
-2. Click the newest **"Windows installer (64-bit)"** for Python 3.12 or 3.13.
-3. Run it. **On the first screen, tick "Add python.exe to PATH"**, then click **Install Now**.
+1. **Python:** go to **https://www.python.org/downloads/windows/**, download the newest
+   **"Windows installer (64-bit)"** for Python 3.12 or 3.13, and run it. **On the first screen, tick
+   "Add python.exe to PATH"**, then click **Install Now**.
+2. **VLC:** go to **https://www.videolan.org**, click **Download VLC** (the 64-bit Windows version is
+   the default), run it and accept the defaults.
+3. **Clearstream:** download this repository (**Code → Download ZIP**, then extract it), open the
+   folder and **double-click `Setup.bat`**. A black window checks Python and VLC, installs the one
+   add-on, and puts a **Clearstream** icon on your desktop. When it says **All done**, press any key.
+4. **Start it:** double-click the **Clearstream** icon on your desktop (or `Start Clearstream.bat`).
 
-*(Already installed on this PC: Python 3.12, 64-bit.)*
+If Windows shows "Windows protected your PC" for `Setup.bat`, click **More info → Run anyway**.
+`Setup.bat` is a plain text file; you can open it in Notepad and read every line.
 
-### Step 2: Install VLC
-1. Go to **https://www.videolan.org**
-2. Click **Download VLC**. Make sure it's the **64-bit Windows** version (the default).
-3. Run it and accept the defaults.
+### When you first open it
 
-*(Already installed on this PC: VLC 3.0.24, 64-bit.)*
-
-### Step 3: Set up Clearstream
-1. Put the **Clearstream** folder wherever you like, for example `Documents\Clearstream`.
-2. Open it and **double-click `Setup.bat`**.
-3. A black window checks Python and VLC, installs the one add-on, and puts a **Clearstream** icon on your
-   desktop. When it says **All done**, press any key.
-
-If Windows shows "Windows protected your PC", click **More info → Run anyway**. Windows shows this
-for any script it hasn't seen before. `Setup.bat` is a plain text file; you can open it in Notepad and
-read every line.
-
-### Step 4: Start it
-Double-click the **Clearstream** icon on your desktop (or `Start Clearstream.bat` in the folder).
+Clearstream checks which free channels are working, which takes about a minute. The video area shows
+the progress, and working channels move to the top of each list as they pass. You can start watching
+straight away.
 
 ---
 
@@ -204,3 +219,15 @@ into the File Explorer address bar). Python and VLC can be removed from Windows 
 | Paid service won't load | Check the server/username/password with your provider; the reason shows in **Sources → Manage my sources** |
 
 Technical log: **Help → Open log folder** (the file `clearstream.log`).
+
+---
+
+## 7. Licence and building
+
+Clearstream is free software under the [MIT licence](LICENSE). The downloadable app also bundles
+libVLC (LGPL/GPL), python-vlc (LGPL) and Python (PSF licence); their licences and source links are in
+the `licences` folder inside the download.
+
+To build the download yourself: install 64-bit Python and VLC, then run `python tools/build_release.py`
+in this folder. It creates `dist/Clearstream-<version>-windows-x64.zip` using hash-pinned build tools
+(`requirements-build.txt`).
