@@ -19,6 +19,9 @@ def main():
         pass
     from .ui import App
     root = tk.Tk()
+    # Without a console, Tk would print errors from timers and clicks to nowhere; log them instead.
+    root.report_callback_exception = lambda *exc: logging.getLogger("clearstream").error(
+        "Error in the window", exc_info=exc)
     App(root)
     root.mainloop()
 

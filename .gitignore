@@ -9,3 +9,8 @@ __pycache__/
 *.m3u
 *.m3u8
 settings.json
+
+# Building the downloadable release (tools/build_release.py)
+.venv-build/
+build/
+dist/

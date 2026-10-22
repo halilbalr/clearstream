@@ -1,8 +1,17 @@
 """Playback on top of libVLC, with buffering, automatic reconnect and automatic switch to backup streams."""
 import logging
+import os
+import sys
 import time
 
 log = logging.getLogger(__name__)
+
+if getattr(sys, "frozen", False):
+    # The downloadable Clearstream.exe carries its own copy of VLC in a "vlc" folder beside it.
+    _VLC_DIR = os.path.join(os.path.dirname(sys.executable), "vlc")
+    os.environ["PYTHON_VLC_LIB_PATH"] = os.path.join(_VLC_DIR, "libvlc.dll")
+    os.environ["PYTHON_VLC_MODULE_PATH"] = _VLC_DIR
+    os.environ["VLC_PLUGIN_PATH"] = os.path.join(_VLC_DIR, "plugins")
 
 try:
     import vlc
