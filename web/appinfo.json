@@ -1,0 +1,15 @@
+{
+  "id": "io.github.halilbalr.clearstream",
+  "version": "1.0.0",
+  "vendor": "Clearstream",
+  "type": "web",
+  "main": "index.html",
+  "title": "Clearstream",
+  "icon": "icons/webos-80.png",
+  "largeIcon": "icons/webos-130.png",
+  "bgColor": "#0e1014",
+  "iconColor": "#2f9bff",
+  "resolution": "1920x1080",
+  "disableBackHistoryAPI": true,
+  "requiredACG": []
+}
