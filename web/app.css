@@ -195,7 +195,7 @@ h1, h2, h3 { line-height: 1.2; }
 }
 .input:focus { border-color: var(--accent); }
 .input[type="file"] { height: auto; padding: 0.55rem 0.75rem; }
-.input-small { width: auto; max-width: 11rem; height: 2.1rem; font-size: 0.85rem; padding: 0 0.5rem; }
+.input-small { width: auto; max-width: 8.5rem; height: 2.1rem; font-size: 0.85rem; padding: 0 0.5rem; }
 
 /* Focus rings: always on a TV, and on a computer once the keyboard is used. */
 body.kbd :focus, body.tv :focus { outline: 0.18rem solid var(--focus); outline-offset: 0.12rem; }
@@ -258,7 +258,7 @@ html[data-theme="light"] .group.is-active { color: var(--accent-fg); }
 }
 
 .list-head { display: flex; flex-wrap: wrap; align-items: center; padding: 0.7rem 1rem 0.55rem; flex: none; }
-.list-titles { flex: 1 1 8.5rem; min-width: 8.5rem; padding: 0.2rem 0; }
+.list-titles { flex: 1 1 7rem; min-width: 7rem; padding: 0.2rem 0; }
 .list-tools { display: flex; align-items: center; margin-left: auto; padding: 0.2rem 0; }
 .list-title { margin: 0; font-size: 1.35rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .list-count { color: var(--muted); font-size: 0.85rem; }
