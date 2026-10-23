@@ -1,0 +1,64 @@
+# The web app (web/): test it, build the LG TV package, and publish it on GitHub Pages.
+# Publishing needs GitHub Pages switched on once: Settings -> Pages -> Source: "GitHub Actions".
+name: Web app
+
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "tests/web/**", ".github/workflows/web.yml"]
+  pull_request:
+    paths: ["web/**", "tests/web/**", ".github/workflows/web.yml"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Unit tests (the port of the channel filter)
+        run: node --test "tests/web/*.test.js"
+      - name: Check that hls.js is the pinned, unmodified file
+        run: echo "a12e7ee1cd64a69dcdb314157e45dafcba705bfb0b1440b7935cb265d374423e  web/vendor/hls.js/hls.min.js" | sha256sum -c -
+
+  lg-tv-package:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build the LG webOS app (.ipk)
+        run: npx --yes -p @webos-tools/cli@3.2.6 ares-package web -o dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: clearstream-lg-webos
+          path: dist/*.ipk
+
+  pages:
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v4

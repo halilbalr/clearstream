@@ -9,6 +9,9 @@
 > 3. Double-click **`Clearstream.exe`**. If Windows says "Windows protected your PC", click
 >    **More info → Run anyway** (the app isn't code-signed). Nothing else to install.
 
+> **On a phone, a computer or an LG TV?** The same channels play in the **Clearstream web app**: open it
+> in any browser, add it to your home screen, or install it on an LG TV. See **[web/README.md](web/README.md)**.
+
 A small TV player for Windows. It shows legitimate free channels, grouped into **Football, Tennis,
 Cricket and News**, plus any paid IPTV service you add later. Video plays through **VLC's playback
 engine** (libVLC), the same engine as the VLC media player, so the hard part, smooth playback, is
@@ -227,6 +230,8 @@ Technical log: **Help → Open log folder** (the file `clearstream.log`).
 Clearstream is free software under the [MIT licence](LICENSE). The downloadable app also bundles
 libVLC (LGPL/GPL), python-vlc (LGPL) and Python (PSF licence); their licences and source links are in
 the `licences` folder inside the download.
+
+The web app (`web/`) bundles hls.js (Apache-2.0); its licence is in `web/vendor/hls.js/`.
 
 To build the download yourself: install 64-bit Python and VLC, then run `python tools/build_release.py`
 in this folder. It creates `dist/Clearstream-<version>-windows-x64.zip` using hash-pinned build tools

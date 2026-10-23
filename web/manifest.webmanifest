@@ -1,0 +1,18 @@
+{
+  "name": "Clearstream",
+  "short_name": "Clearstream",
+  "description": "Legitimate free TV channels, plus your own paid service, on your phone, computer and TV.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0e1014",
+  "theme_color": "#0e1014",
+  "categories": ["entertainment", "news", "sports"],
+  "icons": [
+    { "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
